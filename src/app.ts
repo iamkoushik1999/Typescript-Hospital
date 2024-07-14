@@ -6,6 +6,7 @@ import connectDB from './config/db';
 connectDB();
 // Error Middleware
 import { notFound, errorHandler } from './middlewares/errorMiddlewares';
+import { rateLimiter } from './middlewares/rateLimitMiddleware';
 // Import Routes
 import hospitalRoutes from './routes/hospitalRoutes';
 import doctorRoutes from './routes/doctorRoutes';
@@ -19,6 +20,7 @@ const app = express();
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(rateLimiter);
 
 // Routes
 app.use('/api/v1/hospitals', hospitalRoutes);
